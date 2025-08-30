@@ -1,0 +1,119 @@
+/* styles.css */
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    color: #fff;
+}
+
+/* Box Styling */
+.box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+/* Task Items */
+.items {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: background 0.3s ease;
+}
+
+.items:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.items input[type="checkbox"] {
+    accent-color: #6e8efb;
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+/* Strikethrough when checked */
+.items input[type="checkbox"]:checked + p {
+    text-decoration: line-through;
+    color: rgba(255, 255, 255, 0.6);
+    transition: 0.3s ease;
+}
+
+.items p {
+    flex: 1;
+    font-size: 1rem;
+    word-break: break-word;
+}
+
+/* Form */
+form {
+    display: flex;
+    margin-top: 10px;
+}
+
+form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    font-size: 1rem;
+    outline: none;
+}
+
+form button {
+    background: #6e8efb;
+    border: none;
+    padding: 0 15px;
+    border-radius: 0 8px 8px 0;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background: #5a7bfa;
+}
+
+/* Mobile Responsive */
+@media (max-width: 500px) {
+    .box {
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    form input[type="text"] {
+        font-size: 0.9rem;
+    }
+}
