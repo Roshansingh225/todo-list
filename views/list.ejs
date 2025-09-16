@@ -1,66 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Todo-list</title>
-  <link rel="stylesheet" href="/css/styles.css" />
+<meta charset="UTF-8">
+<title>Todo-list</title>
+<link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <div class="box">
-    <h1>Todo-list</h1>
-  </div>
+ <div class="box">
+          <h1>Todo-list</h1>
+ </div>
 
-  <div class="box">
-    <% for (var i = 0; i < ejes.length; i++) { %>
-      <div class="items">
-       
-        <form action="/delete" method="post" class="delete-form">
-          <input type="hidden" name="index" value="<%= i %>">
-          <input type="checkbox" onchange="this.form.submit()" aria-label="Complete and delete">
-        </form>
+ <div class="box">
+    <% ejes.forEach((task,i)=>{ %>
+   <div class="items">
+             <form action="/delete" method="post" class="delete-form">
+       <input type="hidden" name="index" value="<%= i %>">
+     <input type="checkbox" onchange="this.form.submit()">
+   </form>
+     <div class="task-wrapper">
+       <% if(editIndex===i){ %>
+       <form action="/edit" method="post">
+        <input type="hidden" name="index" value="<%= i %>">
+           <input type="text" name="newValue" value="<%= task %>" required>
+       </form>
+        <% } else { %>
+          <p><%= task %></p>
+           <a href="/edit/<%= i %>" class="edit-btn">Edit</a>
+        <% } %>
+     </div>
+   </div>
+   <% }) %>
 
-       
-        <div class="task-wrapper">
-          <p id="taskText-<%= i %>"><%= ejes[i] %></p>
-
-          
-          <button type="button" class="edit-btn" onclick="showEdit(<%= i %>)">Edit</button>
-
-         
-          <form action="/edit" method="post" id="editForm-<%= i %>" class="edit-form">
-            <input type="hidden" name="index" value="<%= i %>">
-            <input type="text" name="newValue" id="editInput-<%= i %>" value="<%= ejes[i] %>" required>
-            <button type="submit" class="save-btn">Save</button>
-            <button type="button" class="cancel-btn" onclick="cancelEdit(<%= i %>)">Cancel</button>
-          </form>
-        </div>
-      </div>
-    <% } %>
-
-   
-    <form action="/" method="post" class="add-form">
-      <input type="text" name="ele1" placeholder="enter your task" required>
-      <button type="submit">+</button>
-    </form>
-  </div>
-
-  <script>
-    function showEdit(index) {
-      const editForm = document.getElementById('editForm-' + index);
-      const taskText = document.getElementById('taskText-' + index);
-      editForm.style.display = 'flex';
-      taskText.style.display = 'none';
-      const input = document.getElementById('editInput-' + index);
-      if (input) input.focus();
-    }
-
-    function cancelEdit(index) {
-      const editForm = document.getElementById('editForm-' + index);
-      const taskText = document.getElementById('taskText-' + index);
-      editForm.style.display = 'none';
-      taskText.style.display = 'block';
-    }
-  </script>
+ <form action="/" method="post" class="add-form">
+  <input type="text" name="ele1" placeholder="enter your task" required>
+   <button type="submit">+</button>
+ </form>
+ </div>
 </body>
 </html>
