@@ -87,22 +87,6 @@ h1 {
   font-size: 16px;
 }
 
-.save-btn, .cancel-btn {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-}
-
-.save-btn {
-  background: #A683E3;
-  color: white;
-}
-
-.cancel-btn {
-  background: #eee;
-}
-
 
 .add-form {
   display: flex;
