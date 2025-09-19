@@ -1,36 +1,49 @@
 const express = require("express");
-const app= express();
+const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 
-app.set("view engine","ejs");
-app.use(express.urlencoded({extended:true}))
+const app = express();
+
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 
-let tasks = [];
-let editIndex = null;
+let todos = [];
 
-app.get("/", (req,res)=>{res.render("list",{ejes:tasks,editIndex})})
+app.get("/", function (req, res) {
+  res.render("list", { ros: todos });
+});
 
-app.post("/",(req,res)=>{
- if(req.body.ele1)  tasks.push(req.body.ele1)
-res.redirect("/")
-})
+app.post("/", function (req, res) {
+  const newItem = req.body.newItem;
+  if (newItem && newItem.trim() !== "") {
+    todos.push({
+      _id: Date.now().toString(),
+      name: newItem
+    });
+  }
+  res.redirect("/");
+});
 
-app.post("/delete",(req,res)=>{
- let i= parseInt(req.body.index);
- tasks.splice(i,1)
-   res.redirect("/")})
+app.put("/:id", function (req, res) {
+  const id = req.params.id;
+  const newName = req.body.name;
+  todos = todos.map((item) => {
+    if (item._id === id) {
+      return { _id: id, name: newName };
+    }
+    return item;
+  });
+  res.redirect("/");
+});
 
-app.get("/edit/:id",(req,res)=>{
- editIndex=parseInt(req.params.id)
-res.redirect("/")})
+app.delete("/:id", function (req, res) {
+  const id = req.params.id;
+  todos = todos.filter((item) => item._id !== id);
+  res.redirect("/");
+});
 
-app.post("/edit",(req,res)=>{
- let i= parseInt(req.body.index)
- tasks[i] = req.body.newValue
- editIndex=null
-res.redirect("/")
-})
-
-app.listen(3000,function(){
-  console.log("server started")
-})
+app.listen(3000, function () {
+  console.log("Server started on port 3000");
+});
