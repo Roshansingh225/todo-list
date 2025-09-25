@@ -26,45 +26,26 @@
       <button type="submit" class="add-btn">+</button>
     </form>
   </div>
-
-  <script>
-    function editTask(id) {const item = document.querySelector(`[data-id="${id}"]`);
-      const p = item.querySelector(".task-name");
-      const old = p.textContent;
-
-      const input = document.createElement("input");
-      input.value = old;
-      item.replaceChild(input, p);
-      input.focus();
-
-      input.onkeydown = e => {
-        if (e.key === "Enter") {e.preventDefault();
-          submitEdit(id, input.value);
-        }if (e.key === "Escape") cancelEdit(item, old, input);};
- }
-
-   
-    function submitEdit(id, newName) {
-if (!newName.trim()) return alert("Task cannot be empty");
-      const form = document.createElement("form");
-      form.method = "POST";
-      form.action = "/" + id + "?_method=PUT";
-      form.innerHTML = `<input type="hidden" name="name" value="${newName}">`;
-      document.body.appendChild(form).submit();
-    }
-
-   
-    function cancelEdit(item, old, input) {
-      const p = document.createElement("p");
-      p.className = "task-name";
-      p.textContent = old;
-      item.replaceChild(p, input); }
-
- function deleteTask(id) {if (!confirm("Delete this task?")) return;
-      const form = document.createElement("form");
-      form.method = "POST";
-      form.action = "/" + id + "?_method=DELETE";
-      document.body.appendChild(form).submit();}
-  </script>
+<script>
+  function startEdit(id) {
+    let item = document.querySelector(`[data-id="${id}"]`);
+    let p = item.querySelector(".task-name");
+    let input = document.createElement("input");
+    input.value = p.textContent;
+    input.onkeydown=e=> {
+      if (e.key==="Enter") submitEdit(id, input.value);
+      if (e.key ==="Escape") item.replaceChild(p, input); };
+item.replaceChild(input, p);
+ input.focus(); }
+function submitEdit(id, newName) {
+    if (!newName.trim()) return alert("Task cannot be empty!");
+    fetch("/" + id + "?_method=PUT", {
+      method: "POST",
+      headers: {"Content-Type":"application/x-www-form-urlencoded"},
+      body: "name=" + encodeURIComponent(newName)
+    }).then(()=>location.reload()); }
+function submitDelete(id) { if (!confirm("Delete this task?")) return;
+    fetch("/" + id + "?_method=DELETE", { method: "POST" }).then(()=>location.reload());}
+</script>
 </body>
 </html>
