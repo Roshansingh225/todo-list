@@ -28,7 +28,7 @@
   </div>
 <script>
   <script>
-  function startEdit(id) {
+  function editTask(id) {
     let task = document.querySelector(`[data-id="${id}"] .task-name`);
     let newName = prompt("Edit task:", task.textContent);
     if (newName && newName.trim()) {
