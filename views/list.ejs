@@ -26,7 +26,7 @@
       <button type="submit" class="add-btn">+</button>
     </form>
   </div>
-<script>
+
   <script>
   function editTask(id) {
     let task = document.querySelector(`[data-id="${id}"] .task-name`);
@@ -35,7 +35,7 @@
         fetch(`/${id}?_method=PUT`, {
   method: "POST",headers: {"Content-Type":"application/x-www-form-urlencoded"}, body: "name=" + encodeURIComponent(newName.trim())
         }).then(() => location.reload());}}
-function submitDelete(id) { if (!confirm("Delete this task?")) return;
+function deleteTask(id) { if (!confirm("Delete this task?")) return;
     fetch("/" + id + "?_method=DELETE", { method: "POST" }).then(()=>location.reload());}
 </script>
 </body>
